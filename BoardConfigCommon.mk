@@ -118,6 +118,14 @@ TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 # CNE and DPM
 BOARD_USES_QCNE := true
 
+# Dex
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    WITH_DEXPREOPT ?= true
+  endif
+endif
+WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
+
 # Display
 MAX_VIRTUAL_DISPLAY_DIMENSION := 4096
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
@@ -170,7 +178,6 @@ BOARD_USES_QC_TIME_SERVICES := true
 TARGET_USE_SDCLANG := true
 
 # Recovery
-BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_RECOVERY_FSTAB := $(VENDOR_PATH)/rootdir/etc/fstab.qcom
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 TARGET_USERIMAGES_USE_EXT4 := true

@@ -58,7 +58,6 @@ vendor/lib/libaudiodevarb.so
 
 # Bluetooth
 bin/btnvtool
-bin/hci_qcomm_init
 bin/wcnss_filter
 vendor/lib/libaptX-1.0.0-rel-Android21-ARMv7A.so
 vendor/lib/libaptXHD-1.0.0-rel-Android21-ARMv7A.so
@@ -263,12 +262,6 @@ vendor/lib/libvendorconn.so
 vendor/lib/libwms.so
 vendor/lib/libwqe.so
 vendor/lib/libxml.so
-
-# Display calibration data
--etc/qdcm_calib_data_jdi_fhd_cmd_incell_dsi_panel.xml
--etc/qdcm_calib_data_jdi_j1_fhd_cmd_incell_dsi_panel.xml
--etc/qdcm_calib_data_lgd_fhd_cmd_incell_dsi_panel.xml
--etc/qdcm_calib_data_sharp_fhd_cmd_incell_dsi_panel.xml
 
 # DPM
 bin/dpmd
@@ -499,7 +492,6 @@ vendor/lib/libconnctrl.so
 # Perf
 bin/energy-awareness
 bin/iop
-bin/msm_irqbalance
 vendor/bin/perfd
 vendor/etc/perf-profile0.conf
 vendor/etc/perf-profile1.conf
@@ -661,4 +653,3 @@ vendor/lib/mediadrm/libwvdrmengine.so|c2199998c12f0f298be0b3f82eaac7e299a0feaa
 
 # WiFi
 bin/cnss-daemon
-bin/cnss_diag
