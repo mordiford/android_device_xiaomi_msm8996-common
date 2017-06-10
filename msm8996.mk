@@ -114,7 +114,7 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    SnapdragonCamera
+    Snap
 
 # CNE
 PRODUCT_PACKAGES += \
