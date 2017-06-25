@@ -434,7 +434,8 @@ service config_bt_addr /system/bin/btnvtool -O
 
 service netmgrd /system/bin/netmgrd
     class main
-    group radio system wakelock
+    user root
+    group root wifi wakelock radio inet
     writepid /dev/cpuset/system-background/tasks
 
 service ipacm-diag /system/bin/ipacm-diag
@@ -452,7 +453,7 @@ service ipacm /system/bin/ipacm
 service qti /system/vendor/bin/qti
     class main
     user radio
-    group radio net_raw qcom_diag usb net_admin
+    group radio qcom_diag usb
     writepid /dev/cpuset/system-background/tasks
 
 service sensors /system/bin/sensors.qcom
@@ -627,7 +628,7 @@ on property:sys.shutdown.requested=*
 service readmac /system/bin/readmac
     class main
     user root
-    group root
+    group root qcom_diag
     oneshot
 
 service thermal-engine /system/vendor/bin/thermal-engine
