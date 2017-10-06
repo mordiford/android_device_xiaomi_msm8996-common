@@ -170,6 +170,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/etc/flp.conf:system/etc/flp.conf \
     $(LOCAL_PATH)/gps/etc/gps.conf:system/etc/gps.conf \
     $(LOCAL_PATH)/gps/etc/izat.conf:system/etc/izat.conf \
+    $(LOCAL_PATH)/gps/etc/lowi.conf:system/etc/lowi.conf \
     $(LOCAL_PATH)/gps/etc/sap.conf:system/etc/sap.conf \
     $(LOCAL_PATH)/gps/etc/xtwifi.conf:system/etc/xtwifi.conf
 
@@ -216,13 +217,8 @@ PRODUCT_COPY_FILES += \
 # NFC
 PRODUCT_PACKAGES += \
     com.android.nfc_extras \
-    com.nxp.nfc.nq \
-    libnqnfc-nci \
-    libp61-jcop-kit \
-    nfc_nci.nqx.default \
-    NQNfcNci \
-    nqnfcee_access.xml \
-    nqnfcse_access.xml \
+    nfc_nci.pn54x.default \
+    NfcNci \
     Tag
 
 # OMX
