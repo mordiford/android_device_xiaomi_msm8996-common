@@ -1,4 +1,4 @@
-# Copyright (c) 2009-2012, 2014-2016, The Linux Foundation. All rights reserved.
+# Copyright (c) 2009-2012, 2014-2017, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -49,6 +49,9 @@ on init
     write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
 on fs
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
     mount_all /vendor/etc/fstab.qcom
 
 on late-fs
@@ -61,15 +64,9 @@ on late-fs
     write /sys/block/dm-0/queue/read_ahead_kb 2048
     write /sys/block/dm-1/queue/read_ahead_kb 2048
 
-    # Start time daemon early so that the system time can be set early
-    start time_daemon
-
 on post-fs-data
-    # We can start netd here before in is launched in common init.rc on zygote-start
-    start netd
+    mkdir /data/vendor/misc 01771 system system
 
-# zygote need to be started after otapreopt which will be done on post-fs-data
-on zygote-start
     # Create directory used by display clients
     mkdir /data/vendor/display 0770 system graphics
 
@@ -81,9 +78,6 @@ on zygote-start
     mkdir /data/misc/stargate/bg_estimation 0770 system system
     mkdir /data/misc/stargate/calib_test 0770 system system
     mkdir /data/misc/stargate/database 0770 system system
-
-    # Create directory for TZ Apps
-    mkdir /data/misc/qsee 0770 system system
 
     # Create directory for tftp
     mkdir /data/vendor/tombstones 0771 system system
@@ -97,11 +91,6 @@ on zygote-start
     mkdir /data/vendor/ramdump 0771 root system
     mkdir /data/vendor/bluetooth 0770 bluetooth bluetooth
     mkdir /data/vendor/ramdump/bluetooth 0770 bluetooth bluetooth
-
-    mkdir /data/misc/dts 0770 media audio
-    mkdir /data/misc/seemp 0700 system system
-    mkdir /data/misc/audio_pp 0771 media audio
-    mkdir /data/audio_cal 0771 system system
 
     # Create the directories used by the Wireless subsystem
     mkdir /data/misc/wifi 0770 wifi wifi
@@ -122,44 +111,20 @@ on zygote-start
     mkdir /data/connectivity 0771 system system
     chown system system /data/connectivity
 
-    # Create the directories used by DPM subsystem
-    mkdir /data/dpm 0771 system system
-    chown system system /data/dpm
-
-    mkdir /data/dpm/nsrm 0771 system system
-    chown system system /data/dpm/nsrm
-
     # Create directory used by audio subsystem
-    mkdir /data/misc/audio 0770 audio audio
+    mkdir /data/vendor/misc/audio 0770 audio audio
 
     # Create directory for audio delta files
-    mkdir /data/misc/audio/acdbdata 0770 media audio
-    mkdir /data/misc/audio/acdbdata/delta 0770 media audio
-
-    # Create directory used by the DASH client
-    mkdir /data/misc/dash 0770 media audio
+    mkdir /data/vendor/misc/audio/acdbdata 0770 media audio
+    mkdir /data/vendor/misc/audio/acdbdata/delta 0770 media audio
 
     # Create directory for radio
     mkdir /data/vendor/radio 0770 system radio
-
-    # Create the symlink to qcn wpa_supplicant folder for ar6000 wpa_supplicant
-    mkdir /data/system 0775 system system
 
     # Create directories for Location services
     mkdir /data/vendor/location 0770 gps gps
     mkdir /data/vendor/location/mq 0770 gps gps
     mkdir /data/vendor/location/xtwifi 0770 gps gps
-
-    # Create directory from IMS services
-    mkdir /data/shared 0755
-    chown system system /data/shared
-
-    # Create directory for FOTA
-    mkdir /data/fota 0771
-    chown system system /data/fota
-
-    # Create directory for SSC/SLPI sensors
-    mkdir /data/misc/sensors 0775 system system
 
     # SSC/SLPI sensors
     mkdir /persist/sensors
@@ -183,14 +148,6 @@ on zygote-start
     mkdir /data/time/ 0700 system system
 
     setprop vold.post_fs_data_done 1
-
-    # RIDL data
-    mkdir /data/misc/SelfHost/ 0710 system shell
-    mkdir /data/misc/SelfHost/QCLogs/ 2750 system shell
-    mkdir /data/misc/SelfHost/QCLogs/temp/ 0700 system shell
-    mkdir /data/misc/SelfHost/storage/ 0700 system shell
-    mkdir /data/misc/SelfHost/Running/ 2750 system shell
-    mkdir /data/misc/SelfHost/socket/ 2770 system system
 
     # Create PERFD deamon related dirs
     mkdir /data/vendor/perfd 0770 root system
@@ -216,10 +173,6 @@ on zygote-start
     write /data/vendor/radio/db_check_done 0
     chown radio radio /data/vendor/radio/db_check_done
     chmod 0660 /data/vendor/radio/db_check_done
-
-    # Create SWAP related dirs
-    mkdir /data/system/swap 0770 root system
-    chmod 2770 /data/system/swap
 
 on early-boot
     # Set RLIMIT_MEMLOCK to 64MB
@@ -364,7 +317,7 @@ service cnd /vendor/bin/cnd
 service dpmQmiMgr /vendor/bin/dpmQmiMgr
     class main
     user system
-    group system
+    group radio system
 
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
@@ -504,13 +457,10 @@ service qseecomd /vendor/bin/qseecomd
     writepid /dev/cpuset/system-background/tasks
 
 service time_daemon /vendor/bin/time_daemon
-    class late_start
+    class main
     user root
     group root
     writepid /dev/cpuset/system-background/tasks
-
-on property:vold.decrypt=trigger_restart_min_framework
-    start time_daemon
 
 # Start camera server as daemon
 service qcamerasvr /vendor/bin/mm-qcamera-daemon
