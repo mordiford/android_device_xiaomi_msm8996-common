@@ -85,8 +85,7 @@ PRODUCT_COPY_FILES += \
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService \
-    com.dsi.ant.antradio_library \
-    libantradio
+    com.dsi.ant.antradio_library
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -125,8 +124,6 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth@1.0-impl \
-    android.hardware.bluetooth@1.0-service \
     libbt-vendor
 
 # Camera
@@ -134,9 +131,7 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
     camera.msm8996 \
-    libmm-qcamera \
-    vendor.qti.hardware.camera.device@1.0 \
-    vendor.qti.hardware.camera.device@1.0_vendor
+    libmm-qcamera
 
 # CNE
 PRODUCT_PACKAGES += \

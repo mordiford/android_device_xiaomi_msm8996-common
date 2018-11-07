@@ -21,7 +21,6 @@ vendor/lib/rfsa/adsp/libadsp_hvx_zzhdr_RGGB.so
 vendor/lib/rfsa/adsp/libapps_mem_heap.so
 vendor/lib/rfsa/adsp/libscveBlobDescriptor_skel.so
 vendor/lib/rfsa/adsp/libscveT2T_skel.so
-vendor/lib/rfsa/adsp/libdirac-appi.so
 vendor/lib/rfsa/adsp/libdspCV_skel.so
 vendor/lib/rfsa/adsp/libexternal_dog_skel.so
 vendor/lib/rfsa/adsp/libfastcvadsp.so
@@ -29,6 +28,14 @@ vendor/lib/rfsa/adsp/libfastcvadsp_skel.so
 vendor/lib/rfsa/adsp/libvpp_svc_skel.so
 vendor/lib/rfsa/adsp/libvpp_frc.so
 vendor/lib/rfsa/adsp/us-syncproximity.so
+
+# ANT+
+lib64/com.qualcomm.qti.ant@1.0.so
+-lib64/libantradio.so
+lib/com.qualcomm.qti.ant@1.0.so
+-lib/libantradio.so
+vendor/lib64/hw/com.qualcomm.qti.ant@1.0-impl.so
+vendor/lib64/com.qualcomm.qti.ant@1.0_vendor.so
 
 # Audio libraries
 etc/permissions/audiosphere.xml
@@ -63,15 +70,21 @@ vendor/lib/libmdsprpc.so
 vendor/lib/libqtigef.so
 
 # Bluetooth
+vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti
 vendor/bin/wcnss_filter
+vendor/etc/init/android.hardware.bluetooth@1.0-service-qti.rc
+vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so
 vendor/lib64/libbtnv.so
-vendor/lib/libbtnv.so
+vendor/lib64/libbt-hidlclient.so
 
 # Bluetooth (aptX) - from marlin - OPM1.171019.011
 lib64/libaptX_encoder.so|0cebad28afcf29f931bdc2d24fce2730dc882ecf
 lib64/libaptXHD_encoder.so|90f47f10af28b3ead143200cb4370b847c513127
 lib/libaptX_encoder.so|984739a0bc968e18f75ced205733fe3f51c2d4f0
 lib/libaptXHD_encoder.so|974c486e4ca03faa0713553d9dfe2995ac93e01c
+
+# Bluetooth (shared dependencies)
+vendor/lib64/vendor.qti.hardware.fm@1.0_vendor.so
 
 # Camera
 vendor/bin/mm-qcamera-daemon
@@ -518,6 +531,15 @@ vendor/lib/vendor.display.color@1.0_vendor.so|7ca706d322a38084ea2e6b103efe1acd33
 vendor/lib/vendor.display.postproc@1.0_vendor.so|a710a9d7f93892961ff71420fe222add0bfcf57e
 vendor/lib/vendor.qti.hardware.qdutils_disp@1.0_vendor.so|04bf21220673630ebaa4c8e7a84adbcdcf08f0dc
 
+# Power-off alarm
+etc/permissions/vendor-qti-hardware-alarm.xml:vendor/etc/permissions/vendor-qti-hardware-alarm.xml
+-vendor/app/PowerOffAlarm/PowerOffAlarm.apk
+vendor/bin/hw/vendor.qti.hardware.alarm@1.0-service
+vendor/etc/init/vendor.qti.hardware.alarm@1.0-service.rc
+vendor/framework/vendor.qti.hardware.alarm-V1.0-java.jar
+vendor/lib64/hw/vendor.qti.hardware.alarm@1.0-impl.so
+vendor/lib64/vendor.qti.hardware.alarm@1.0.so
+
 # QMI
 etc/permissions/qti_libpermissions.xml|ef3c88495f2f61a2d16e1445113a9d80f8db0e0a
 etc/permissions/qti_permissions.xml
@@ -536,6 +558,7 @@ vendor/lib64/libqmi_common_so.so
 vendor/lib64/libqmi_csi.so
 vendor/lib64/libqmi_encdec.so
 vendor/lib64/libqmi.so
+vendor/lib64/libqminvapi.so
 vendor/lib64/libqmiservices.so
 vendor/lib64/libsmemlog.so
 vendor/lib/libdiag.so
@@ -552,6 +575,7 @@ vendor/lib/libqmi_common_so.so
 vendor/lib/libqmi_csi.so
 vendor/lib/libqmi_encdec.so
 vendor/lib/libqmi.so
+vendor/lib/libqminvapi.so
 vendor/lib/libqmiservices.so
 vendor/lib/libsmemlog.so
 
@@ -559,9 +583,9 @@ vendor/lib/libsmemlog.so
 -app/QtiTelephonyService/QtiTelephonyService.apk
 etc/permissions/qcrilhook.xml
 etc/permissions/telephonyservice.xml
--framework/QtiTelephonyServicelibrary.jar
--framework/qcrilhook.jar
--framework/qti-telephony-common.jar|2eba987ae297a892e895ec1e9a302b41dbe0232e
+framework/QtiTelephonyServicelibrary.jar
+framework/qcrilhook.jar
+framework/qti-telephony-common.jar|2eba987ae297a892e895ec1e9a302b41dbe0232e
 -priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
 vendor/bin/ATFWD-daemon
 vendor/bin/netmgrd
